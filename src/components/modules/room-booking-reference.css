@@ -1,0 +1,1375 @@
+.rb-reference-app {
+  --font-body: 'Manrope', 'Segoe UI', sans-serif;
+  --font-display: 'Sora', 'Manrope', sans-serif;
+  --bg-primary: #111112;
+  --bg-secondary: #090909;
+  --bg-tertiary: #1b1a1b;
+  --surface-glass: rgba(24, 21, 20, 0.82);
+  --surface-strong: rgba(18, 17, 18, 0.96);
+  --text-primary: #f5efe6;
+  --text-secondary: rgba(235, 225, 214, 0.72);
+  --text-tertiary: rgba(210, 196, 182, 0.42);
+  --border-color: rgba(255, 243, 232, 0.1);
+  --header-bg: linear-gradient(135deg, rgba(142,160,125,0.92) 0%, rgba(120,101,84,0.88) 52%, rgba(198,127,87,0.82) 100%);
+  --header-text: #f6efe6;
+  --nav-bg: rgba(14, 14, 15, 0.9);
+  --nav-text: rgba(235, 225, 214, 0.78);
+  --nav-border: rgba(255, 243, 232, 0.12);
+  --primary-color: #dcc4a3;
+  --primary-dark: #c67f57;
+  --accent-moss: #8ea07d;
+  --accent-wine: #7f4f56;
+  --focus-ring: rgba(220, 196, 163, 0.2);
+  --info-bg: rgba(220, 196, 163, 0.08);
+  --info-border: rgba(220, 196, 163, 0.2);
+  --info-text: #f0deca;
+  --error-bg: rgba(127, 79, 86, 0.18);
+  --error-border: rgba(127, 79, 86, 0.42);
+  --error-text: #f4d3d7;
+  --success-bg: rgba(142, 160, 125, 0.16);
+  --success-text: #dbe6d1;
+  --shadow: rgba(0, 0, 0, 0.42);
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+}
+
+.rb-reference-app * {
+  box-sizing: border-box;
+}
+
+.rb-reference-app h1,
+.rb-reference-app h2,
+.rb-reference-app h3,
+.rb-reference-app h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.rb-reference-app button,
+.rb-reference-app input,
+.rb-reference-app select,
+.rb-reference-app textarea {
+  font-family: inherit;
+}
+
+.rb-reference-app :focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.rb-reference-app .app-header {
+  background: var(--header-bg);
+  color: var(--header-text);
+  padding: 2.25rem 1.25rem 3.8rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px 28px 0 0;
+}
+
+.rb-reference-app .app-header::before {
+  content: '';
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: rgba(255, 248, 240, 0.12);
+  top: -180px;
+  right: -90px;
+}
+
+.rb-reference-app .header-controls {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.rb-reference-app .user-session-card {
+  width: min(500px, 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  border: 1px solid rgba(255, 248, 240, 0.22);
+  border-radius: 18px;
+  padding: 0.75rem 0.9rem;
+  background: rgba(255, 248, 240, 0.06);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(10px);
+}
+
+.rb-reference-app .user-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.rb-reference-app .user-email {
+  font-size: 0.82rem;
+  color: rgba(236, 254, 255, 0.85);
+  margin: 0.18rem 0 0;
+}
+
+.rb-reference-app .logout-button {
+  border: 1px solid rgba(255, 248, 240, 0.34);
+  background: rgba(255, 248, 240, 0.08);
+  color: var(--header-text);
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.rb-reference-app .app-nav {
+  width: min(620px, calc(100% - 24px));
+  margin: -22px auto 0;
+  padding: 0.45rem;
+  border-radius: 999px;
+  background: var(--nav-bg);
+  border: 1px solid var(--nav-border);
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.34);
+  display: flex;
+  gap: 0.45rem;
+  position: relative;
+  z-index: 2;
+}
+
+.rb-reference-app .nav-button {
+  flex: 1;
+  border: 1px solid rgba(255, 243, 232, 0.06);
+  background: transparent;
+  color: var(--nav-text);
+  border-radius: 999px;
+  padding: 0.88rem 1rem;
+  font-weight: 700;
+  font-size: 0.98rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.rb-reference-app .nav-button:hover {
+  transform: translateY(-1px);
+}
+
+.rb-reference-app .nav-button.active {
+  background: linear-gradient(130deg, var(--primary-color), var(--primary-dark));
+  color: #1c1410;
+  box-shadow: 0 10px 24px rgba(198, 127, 87, 0.22);
+}
+
+.rb-reference-app .admin-button.active {
+  background: linear-gradient(130deg, var(--accent-moss), var(--primary-color));
+  color: #14130f;
+}
+
+.rb-reference-app .app-main {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 2.1rem 1.25rem 2.5rem;
+}
+
+.rb-reference-app .loading,
+.rb-reference-app .admin-loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+
+.rb-reference-app .info-message,
+.rb-reference-app .error-message {
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  border: 1px solid;
+}
+
+.rb-reference-app .info-message {
+  background: var(--info-bg);
+  border-color: var(--info-border);
+  color: var(--info-text);
+}
+
+.rb-reference-app .error-message {
+  background: var(--error-bg);
+  border-color: var(--error-border);
+  color: var(--error-text);
+}
+
+.rb-reference-app .room-list-container,
+.rb-reference-app .my-bookings-container,
+.rb-reference-app .booking-form-container {
+  width: 100%;
+}
+
+.rb-reference-app .room-list-container h2,
+.rb-reference-app .my-bookings-container h2,
+.rb-reference-app .booking-form-card h2,
+.rb-reference-app .admin-header h2,
+.rb-reference-app .management-header h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
+
+.rb-reference-app .room-browser-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  gap: 1.5rem;
+  align-items: end;
+  margin-bottom: 1.6rem;
+}
+
+.rb-reference-app .room-browser-kicker,
+.rb-reference-app .filters-kicker {
+  margin: 0 0 0.5rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brand-clay, var(--primary-dark));
+  opacity: 0.9;
+}
+
+.rb-reference-app .room-browser-copy,
+.rb-reference-app .filters-heading p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.rb-reference-app .room-filters,
+.rb-reference-app .bookings-filter,
+.rb-reference-app .add-room-card,
+.rb-reference-app .admin-approval-container,
+.rb-reference-app .booking-form-card,
+.rb-reference-app .timeline-section,
+.rb-reference-app .management-card {
+  background: var(--surface-glass);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(16px);
+}
+
+.rb-reference-app .room-filters,
+.rb-reference-app .bookings-filter,
+.rb-reference-app .booking-form-card,
+.rb-reference-app .admin-approval-container,
+.rb-reference-app .add-room-card,
+.rb-reference-app .management-card {
+  padding: 1rem;
+}
+
+.rb-reference-app .room-filters {
+  margin-bottom: 1.5rem;
+  padding: 1.15rem 1.15rem 1rem;
+}
+
+.rb-reference-app .filters-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  gap: 1.5rem;
+  align-items: end;
+  margin-bottom: 1.2rem;
+}
+
+.rb-reference-app .filters-heading h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+}
+
+.rb-reference-app .filters-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr)) auto;
+  gap: 0.8rem;
+  align-items: end;
+}
+
+.rb-reference-app .filter-group,
+.rb-reference-app .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.rb-reference-app .filter-group label,
+.rb-reference-app .form-group label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.rb-reference-app .filter-group select,
+.rb-reference-app .form-group input,
+.rb-reference-app .form-group textarea,
+.rb-reference-app .capacity-toggle-button {
+  padding: 0.72rem 0.78rem;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: rgba(255, 248, 240, 0.05);
+  color: var(--text-primary);
+  font-size: 0.92rem;
+}
+
+.rb-reference-app .form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.rb-reference-app .filter-group select:focus,
+.rb-reference-app .form-group input:focus,
+.rb-reference-app .form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.rb-reference-app .capacity-filter-popover {
+  position: relative;
+}
+
+.rb-reference-app .capacity-toggle-button {
+  text-align: left;
+  cursor: pointer;
+}
+
+.rb-reference-app .capacity-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  left: 0;
+  width: min(320px, 85vw);
+  z-index: 30;
+  padding: 0.8rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: rgba(18, 17, 18, 0.98);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+}
+
+.rb-reference-app .capacity-values {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.rb-reference-app .capacity-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.rb-reference-app .capacity-sliders input[type='range'] {
+  width: 100%;
+  accent-color: var(--primary-color);
+}
+
+.rb-reference-app .clear-filters-button,
+.rb-reference-app .submit-button,
+.rb-reference-app .btn-add-room,
+.rb-reference-app .btn-save,
+.rb-reference-app .btn-cancel,
+.rb-reference-app .btn-approve,
+.rb-reference-app .btn-reject,
+.rb-reference-app .cancel-button,
+.rb-reference-app .confirm-yes,
+.rb-reference-app .confirm-no,
+.rb-reference-app .room-card-button,
+.rb-reference-app .back-button,
+.rb-reference-app .approval-only-toggle,
+.rb-reference-app .admin-section-tab,
+.rb-reference-app .status-tab {
+  transition: all 0.22s ease;
+}
+
+.rb-reference-app .clear-filters-button,
+.rb-reference-app .back-button {
+  height: 42px;
+  padding: 0 1rem;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 248, 240, 0.05);
+  color: var(--text-primary);
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rb-reference-app .clear-filters-button:hover,
+.rb-reference-app .back-button:hover,
+.rb-reference-app .approval-only-toggle:hover,
+.rb-reference-app .room-card-button:hover,
+.rb-reference-app .submit-button:hover:not(:disabled),
+.rb-reference-app .btn-add-room:hover:not(:disabled),
+.rb-reference-app .btn-save:hover:not(:disabled),
+.rb-reference-app .btn-cancel:hover:not(:disabled),
+.rb-reference-app .btn-approve:hover:not(:disabled),
+.rb-reference-app .btn-reject:hover:not(:disabled),
+.rb-reference-app .cancel-button:hover,
+.rb-reference-app .admin-section-tab:hover {
+  transform: translateY(-1px);
+}
+
+.rb-reference-app .amenities-filter-group {
+  margin-top: 0.95rem;
+}
+
+.rb-reference-app .amenities-filter-title {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.rb-reference-app .amenities-filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rb-reference-app .amenity-filter-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 248, 240, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.83rem;
+}
+
+.rb-reference-app .amenity-filter-option input {
+  accent-color: var(--primary-color);
+}
+
+.rb-reference-app .room-grid,
+.rb-reference-app .rooms-management-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+
+.rb-reference-app .room-card {
+  background: var(--surface-strong);
+  border-radius: 22px;
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.24);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  position: relative;
+  isolation: isolate;
+}
+
+.rb-reference-app .room-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), transparent 26%),
+    radial-gradient(circle at top right, rgba(255,255,255,0.07), transparent 24%);
+  opacity: 0.8;
+}
+
+.rb-reference-app .room-card:nth-child(2n) {
+  transform: translateY(12px);
+}
+
+.rb-reference-app .room-card:nth-child(3n) {
+  transform: translateY(-8px);
+}
+
+.rb-reference-app .room-card-header {
+  padding: 1.2rem 1.2rem 0;
+  background: transparent;
+  color: #171310;
+  position: relative;
+  z-index: 1;
+}
+
+.rb-reference-app .room-card-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.rb-reference-app .room-card-kicker {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.34rem 0.62rem;
+  background: rgba(255, 248, 240, 0.07);
+  border: 1px solid rgba(255, 243, 232, 0.1);
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.rb-reference-app .room-card-visual {
+  position: relative;
+  height: 170px;
+  border-radius: 18px;
+  padding: 1.2rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 243, 232, 0.08);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,248,240,0.1), transparent 22%),
+    linear-gradient(145deg, rgba(255,248,240,0.06), rgba(255,248,240,0.02));
+}
+
+.rb-reference-app .room-card--sage .room-card-visual {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(142,160,125,0.22), transparent 22%),
+    linear-gradient(145deg, rgba(142,160,125,0.14), rgba(255,248,240,0.03));
+}
+
+.rb-reference-app .room-card--clay .room-card-visual {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(198,127,87,0.22), transparent 22%),
+    linear-gradient(145deg, rgba(198,127,87,0.14), rgba(255,248,240,0.03));
+}
+
+.rb-reference-app .room-card--sand .room-card-visual {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(220,196,163,0.18), transparent 22%),
+    linear-gradient(145deg, rgba(220,196,163,0.14), rgba(255,248,240,0.03));
+}
+
+.rb-reference-app .room-card--wine .room-card-visual {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(127,79,86,0.22), transparent 22%),
+    linear-gradient(145deg, rgba(127,79,86,0.16), rgba(255,248,240,0.03));
+}
+
+.rb-reference-app .room-card-orbit,
+.rb-reference-app .room-card-gridline {
+  position: absolute;
+  pointer-events: none;
+}
+
+.rb-reference-app .room-card-orbit {
+  border: 1px solid rgba(255, 243, 232, 0.12);
+  border-radius: 999px;
+}
+
+.rb-reference-app .room-card-orbit-a {
+  width: 180px;
+  height: 180px;
+  right: -48px;
+  top: -64px;
+}
+
+.rb-reference-app .room-card-orbit-b {
+  width: 120px;
+  height: 120px;
+  left: -36px;
+  bottom: -48px;
+}
+
+.rb-reference-app .room-card-gridline {
+  background: rgba(255, 243, 232, 0.08);
+}
+
+.rb-reference-app .room-card-gridline-a {
+  width: 1px;
+  height: 120px;
+  right: 28px;
+  top: 20px;
+}
+
+.rb-reference-app .room-card-gridline-b {
+  height: 1px;
+  width: 100px;
+  left: 20px;
+  bottom: 28px;
+}
+
+.rb-reference-app .room-card-title-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 72%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.rb-reference-app .room-card-header h3 {
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  margin: 0;
+  line-height: 0.95;
+  color: var(--text-primary);
+  min-height: 4.8rem;
+  display: flex;
+  align-items: flex-end;
+}
+
+.rb-reference-app .capacity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(255, 248, 240, 0.12);
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.94rem;
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 243, 232, 0.12);
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+}
+
+.rb-reference-app .room-card-title-wrap p {
+  margin: 0.55rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.rb-reference-app .room-card-body {
+  padding: 1.15rem 1.2rem 1.2rem;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.rb-reference-app .room-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.rb-reference-app .room-detail-label {
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.rb-reference-app .room-detail-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.rb-reference-app .room-detail-value.subtle {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.rb-reference-app .amenities {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 243, 232, 0.08);
+}
+
+.rb-reference-app .amenities strong,
+.rb-reference-app .room-title,
+.rb-reference-app .room-info h3 {
+  color: var(--primary-color);
+}
+
+.rb-reference-app .amenity-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.rb-reference-app .amenity-tag {
+  background: rgba(255, 248, 240, 0.07);
+  padding: 0.46rem 0.82rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 243, 232, 0.08);
+}
+
+.rb-reference-app .room-card-button,
+.rb-reference-app .submit-button,
+.rb-reference-app .btn-add-room,
+.rb-reference-app .btn-save,
+.rb-reference-app .btn-approve {
+  background: linear-gradient(130deg, var(--primary-color), var(--primary-dark));
+  color: #1b1511;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.rb-reference-app .room-card-button {
+  margin: 1.2rem 1.2rem 1.2rem;
+  padding: 0.95rem 1.2rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  border-radius: 14px;
+}
+
+.rb-reference-app .no-rooms,
+.rb-reference-app .no-bookings,
+.rb-reference-app .no-pending-bookings {
+  text-align: center;
+  padding: 2rem 1.25rem;
+  color: var(--text-tertiary);
+  background: var(--surface-glass);
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  margin-top: 1rem;
+}
+
+.rb-reference-app .booking-form-container {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.rb-reference-app .back-button {
+  margin-bottom: 2rem;
+}
+
+.rb-reference-app .booking-form-card {
+  padding: 2rem;
+}
+
+.rb-reference-app .room-info {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.rb-reference-app .booking-form-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.rb-reference-app .timeline-section {
+  padding: 1.5rem;
+}
+
+.rb-reference-app .timeline-section h3 {
+  margin-bottom: 1rem;
+}
+
+.rb-reference-app .loading-text {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.rb-reference-app .time-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.rb-reference-app .booking-summary {
+  background: var(--info-bg);
+  border-left: 4px solid var(--info-border);
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.rb-reference-app .booking-summary h3 {
+  margin-bottom: 1rem;
+  color: var(--info-text);
+}
+
+.rb-reference-app .booking-summary p {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+}
+
+.rb-reference-app .submit-button {
+  padding: 1rem;
+  font-size: 1.05rem;
+}
+
+.rb-reference-app .submit-button:disabled,
+.rb-reference-app .btn-add-room:disabled,
+.rb-reference-app .btn-save:disabled,
+.rb-reference-app .btn-cancel:disabled,
+.rb-reference-app .btn-approve:disabled,
+.rb-reference-app .btn-reject:disabled,
+.rb-reference-app .confirm-yes:disabled,
+.rb-reference-app .confirm-no:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.rb-reference-app .timeline-container {
+  width: 100%;
+}
+
+.rb-reference-app .timeline-legend {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.rb-reference-app .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.rb-reference-app .legend-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.rb-reference-app .legend-box.available {
+  background: #4caf50;
+}
+
+.rb-reference-app .legend-box.booked {
+  background: #f44336;
+}
+
+.rb-reference-app .legend-box.past {
+  background: #9ca3af;
+}
+
+.rb-reference-app .legend-box.selected {
+  background: var(--primary-color);
+}
+
+.rb-reference-app .timeline {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem;
+  background: rgba(255, 248, 240, 0.03);
+}
+
+.rb-reference-app .hour-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.rb-reference-app .hour-label {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  min-width: 84px;
+  text-align: center;
+}
+
+.rb-reference-app .time-slot {
+  width: 84px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  border: 2px solid transparent;
+  font-weight: 600;
+}
+
+.rb-reference-app .time-slot.available {
+  background: #4caf50;
+  color: white;
+}
+
+.rb-reference-app .time-slot.available:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
+}
+
+.rb-reference-app .time-slot.booked {
+  background: #f44336;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.rb-reference-app .time-slot.past {
+  background: #9ca3af;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.rb-reference-app .time-slot.selected {
+  background: linear-gradient(130deg, var(--primary-color), var(--primary-dark));
+  color: #1b1511;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.rb-reference-app .timeline-hint {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.rb-reference-app .my-bookings-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.rb-reference-app .bookings-filter {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rb-reference-app .filter-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.rb-reference-app .approval-only-toggle {
+  border: 1px solid rgba(220, 196, 163, 0.26);
+  background: rgba(220, 196, 163, 0.08);
+  color: #f1dfca;
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.rb-reference-app .approval-only-toggle.active {
+  background: var(--primary-color);
+  color: #1b1511;
+  box-shadow: 0 10px 20px rgba(198, 127, 87, 0.22);
+}
+
+.rb-reference-app .bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.rb-reference-app .booking-item {
+  background: var(--surface-strong);
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 12px 24px var(--shadow);
+  border-left: 4px solid var(--primary-color);
+  border: 1px solid var(--border-color);
+}
+
+.rb-reference-app .booking-item.past {
+  opacity: 0.72;
+  border-left-color: var(--text-tertiary);
+}
+
+.rb-reference-app .booking-item.status-pending {
+  border-left-color: #f59e0b;
+}
+
+.rb-reference-app .booking-item.status-approved {
+  border-left-color: var(--accent-moss);
+  border-color: rgba(142, 160, 125, 0.34);
+}
+
+.rb-reference-app .booking-item.status-rejected,
+.rb-reference-app .booking-item.status-cancelled {
+  border-left-color: #ef4444;
+  opacity: 0.65;
+}
+
+.rb-reference-app .booking-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.rb-reference-app .booking-title h3 {
+  margin: 0 0 0.5rem;
+  color: var(--text-primary);
+  font-size: 1.3rem;
+}
+
+.rb-reference-app .status-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rb-reference-app .status-badge,
+.rb-reference-app .time-status-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.rb-reference-app .status-badge.approved {
+  background: var(--accent-moss);
+  color: #10110d;
+}
+
+.rb-reference-app .status-badge.pending {
+  background: rgba(220, 196, 163, 0.18);
+  color: #f0d8ba;
+}
+
+.rb-reference-app .status-badge.rejected,
+.rb-reference-app .status-badge.cancelled {
+  background: rgba(127, 79, 86, 0.18);
+  color: #f1cfd4;
+}
+
+.rb-reference-app .time-status-badge.upcoming {
+  background: var(--info-bg);
+  color: var(--info-text);
+}
+
+.rb-reference-app .time-status-badge.past {
+  background: rgba(255, 248, 240, 0.07);
+  color: var(--text-secondary);
+}
+
+.rb-reference-app .booking-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rb-reference-app .cancel-button,
+.rb-reference-app .confirm-yes {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, var(--accent-wine), #663940);
+  color: #fff7f7;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.rb-reference-app .confirm-no,
+.rb-reference-app .btn-cancel {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 248, 240, 0.08);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.rb-reference-app .cancel-confirm {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  background: rgba(245, 158, 11, 0.12);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+}
+
+.rb-reference-app .cancel-confirm p {
+  margin: 0;
+  color: #fbbf24;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.rb-reference-app .booking-details,
+.rb-reference-app .booking-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.rb-reference-app .detail,
+.rb-reference-app .detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.rb-reference-app .label,
+.rb-reference-app .detail-label {
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rb-reference-app .value,
+.rb-reference-app .detail-value {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.rb-reference-app .admin-approval-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.rb-reference-app .admin-section-tabs {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.rb-reference-app .admin-section-tab {
+  border: 1px solid var(--border-color);
+  background: var(--surface-glass);
+  color: var(--primary-color);
+  border-radius: 999px;
+  padding: 0.55rem 1.15rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rb-reference-app .admin-section-tab.active {
+  background: linear-gradient(130deg, var(--primary-color), var(--primary-dark));
+  color: #ffffff;
+}
+
+.rb-reference-app .booking-status-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.rb-reference-app .status-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -0.55rem;
+}
+
+.rb-reference-app .status-tab.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+.rb-reference-app .admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.rb-reference-app .pending-count {
+  background: linear-gradient(130deg, var(--primary-color), var(--primary-dark));
+  color: #1b1511;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 10px 18px rgba(198, 127, 87, 0.2);
+}
+
+.rb-reference-app .pending-bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rb-reference-app .pending-booking-card {
+  background: var(--surface-strong);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--primary-color);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  box-shadow: 0 8px 18px var(--shadow);
+}
+
+.rb-reference-app .booking-card-left {
+  flex: 1;
+}
+
+.rb-reference-app .booking-info-block {
+  margin-bottom: 16px;
+}
+
+.rb-reference-app .room-title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.rb-reference-app .room-location {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 14px;
+}
+
+.rb-reference-app .booking-card-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 140px;
+}
+
+.rb-reference-app .btn-approve,
+.rb-reference-app .btn-reject,
+.rb-reference-app .btn-edit,
+.rb-reference-app .btn-delete {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+
+.rb-reference-app .btn-reject,
+.rb-reference-app .btn-delete {
+  background: linear-gradient(135deg, var(--accent-wine), #663940);
+  color: #fff7f7;
+}
+
+.rb-reference-app .room-management-container {
+  padding: 8px;
+}
+
+.rb-reference-app .management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.rb-reference-app .rooms-management-grid {
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.rb-reference-app .management-card {
+  transition: box-shadow 0.3s ease;
+}
+
+.rb-reference-app .room-info h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.rb-reference-app .room-info p {
+  margin: 10px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.rb-reference-app .management-buttons,
+.rb-reference-app .form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.rb-reference-app .btn-edit {
+  background: linear-gradient(135deg, var(--accent-moss), #728562);
+  color: #14130f;
+}
+
+.rb-reference-app .edit-form {
+  background: var(--bg-tertiary);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.rb-reference-app .edit-form h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+@media (max-width: 900px) {
+  .rb-reference-app .filters-row,
+  .rb-reference-app .time-inputs {
+    grid-template-columns: 1fr;
+  }
+
+  .rb-reference-app .app-header {
+    padding-bottom: 3.2rem;
+  }
+
+  .rb-reference-app .app-nav {
+    width: calc(100% - 24px);
+  }
+}
+
+@media (max-width: 720px) {
+  .rb-reference-app .user-session-card,
+  .rb-reference-app .booking-item-header,
+  .rb-reference-app .admin-header,
+  .rb-reference-app .management-header,
+  .rb-reference-app .pending-booking-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .rb-reference-app .timeline {
+    gap: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .rb-reference-app .hour-label {
+    min-width: 74px;
+    font-size: 0.7rem;
+  }
+
+  .rb-reference-app .time-slot {
+    width: 74px;
+    height: 28px;
+    font-size: 0.7rem;
+  }
+}
