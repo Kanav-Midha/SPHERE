@@ -1,6 +1,13 @@
 import { useState } from 'react';
-import { ArrowRight, Hexagon } from 'lucide-react';
-import { allowedGoogleDomain, supabase } from '../lib/supabase';
+import { ArrowRight, Eye, Hexagon } from 'lucide-react';
+import {
+  allowedGoogleDomain,
+  supabase,
+  DEMO_EMAIL,
+  DEMO_PASSWORD,
+  demoLoginEnabled,
+  googleAuthEnabled,
+} from '../lib/supabase';
 import { useToastStore } from '../store/useToastStore';
 import GrainOverlay from '../components/core/GrainOverlay';
 import { CAMPUS_IMAGE } from '../lib/campusVisuals';
@@ -19,6 +26,23 @@ function GoogleMark() {
 export default function Login() {
   const { addToast } = useToastStore();
   const [loading, setLoading] = useState(false);
+  const [demoLoading, setDemoLoading] = useState(false);
+
+  async function handleDemoSignIn() {
+    setDemoLoading(true);
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: DEMO_EMAIL,
+        password: DEMO_PASSWORD,
+      });
+
+      if (error) {
+        addToast({ type: 'error', title: 'Demo Unavailable', message: error.message });
+      }
+    } finally {
+      setDemoLoading(false);
+    }
+  }
 
   async function handleGoogleSignIn() {
     setLoading(true);
@@ -107,17 +131,31 @@ export default function Login() {
             <div className="mt-5 rounded-[30px] border border-white/10 bg-[#121111]/68 p-6 backdrop-blur-2xl">
               <div className="mb-5 flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-white text-2xl font-semibold">Continue with BITS Google</p>
+                  <p className="text-white text-2xl font-semibold">
+                    {googleAuthEnabled ? 'Continue with BITS Google' : 'Take a look around'}
+                  </p>
                   <p className="text-white/45 text-sm mt-2 leading-relaxed">
-                    Access is reserved for students and staff using <span style={{ color: '#dcc4a3' }} className="font-medium">@{allowedGoogleDomain}</span>.
+                    {googleAuthEnabled ? (
+                      <>
+                        Access is reserved for students and staff using{' '}
+                        <span style={{ color: '#dcc4a3' }} className="font-medium">@{allowedGoogleDomain}</span>.
+                      </>
+                    ) : (
+                      <>
+                        Campus sign-in is limited to{' '}
+                        <span style={{ color: '#dcc4a3' }} className="font-medium">@{allowedGoogleDomain}</span>{' '}
+                        accounts, so this deployment opens a read-only demo instead.
+                      </>
+                    )}
                   </p>
                 </div>
                 <div className="hidden rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 md:block">
                   <p className="text-[10px] uppercase tracking-[0.24em] text-white/34">Sign-in</p>
-                  <p className="mt-1 text-sm text-white/64">Google OAuth</p>
+                  <p className="mt-1 text-sm text-white/64">{googleAuthEnabled ? 'Google OAuth' : 'Demo access'}</p>
                 </div>
               </div>
 
+              {googleAuthEnabled && (
               <button
                 type="button"
                 disabled={loading}
@@ -134,15 +172,56 @@ export default function Login() {
                   {!loading && <ArrowRight size={16} />}
                 </span>
               </button>
+              )}
+
+              {demoLoginEnabled && (
+                <>
+                  {googleAuthEnabled && (
+                    <div className="my-4 flex items-center gap-4">
+                      <div className="h-px flex-1 bg-white/10" />
+                      <span className="text-[10px] uppercase tracking-[0.24em] text-white/30">or</span>
+                      <div className="h-px flex-1 bg-white/10" />
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    disabled={demoLoading}
+                    onClick={handleDemoSignIn}
+                    className="flex min-h-[60px] w-full items-center justify-center rounded-[22px] border border-white/14 bg-white/[0.04] px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-70"
+                  >
+                    <span className="flex items-center gap-3">
+                      <Eye size={16} />
+                      {demoLoading ? 'Opening demo...' : 'Explore the read-only demo'}
+                      {!demoLoading && <ArrowRight size={16} />}
+                    </span>
+                  </button>
+
+                  <p className="mt-3 text-center text-xs leading-relaxed text-white/40">
+                    No account needed. Browse real data and claim a ticket; writes are blocked
+                    by row level security.
+                  </p>
+                </>
+              )}
 
               <div className="mt-5 grid gap-3 md:grid-cols-2">
                 <div className="rounded-2xl border border-white/8 bg-white/[0.02] px-4 py-3">
                   <p className="text-[10px] uppercase tracking-[0.24em] text-white/32">Access</p>
-                  <p className="mt-2 text-sm text-white/62">Only the BITS Goa domain can enter this platform.</p>
+                  <p className="mt-2 text-sm text-white/62">
+                    {googleAuthEnabled
+                      ? 'Only the BITS Goa domain can enter this platform.'
+                      : 'Roles, visibility and every write rule live in Postgres, not in this app.'}
+                  </p>
                 </div>
                 <div className="rounded-2xl border border-white/8 bg-white/[0.02] px-4 py-3">
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-white/32">Support</p>
-                  <p className="mt-2 text-sm text-white/62">If login fails, verify Google auth is enabled in Supabase.</p>
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-white/32">
+                    {googleAuthEnabled ? 'Support' : 'Demo'}
+                  </p>
+                  <p className="mt-2 text-sm text-white/62">
+                    {googleAuthEnabled
+                      ? 'If login fails, verify Google auth is enabled in Supabase.'
+                      : 'Read freely and claim a ticket. Bookings are refused by design.'}
+                  </p>
                 </div>
               </div>
             </div>

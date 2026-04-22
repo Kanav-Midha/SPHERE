@@ -117,15 +117,41 @@ export interface OperatorSession {
 
 export const allowedGoogleDomain = (import.meta.env.VITE_ALLOWED_GOOGLE_DOMAIN as string | undefined)?.toLowerCase() || 'goa.bits-pilani.ac.in';
 
+/**
+ * Public demo account. It signs in with a password rather than Google so a
+ * visitor without a campus address can still look around. What it may and may
+ * not do is decided in the database by RESTRICTIVE policies, not here — see
+ * supabase/migrations/20260422223700_add_demo_account_guardrails.sql.
+ */
+export const DEMO_EMAIL = 'demo@sphere.demo';
+export const DEMO_PASSWORD = (import.meta.env.VITE_DEMO_PASSWORD as string | undefined) || '';
+export const demoLoginEnabled = DEMO_PASSWORD.length > 0;
+export const googleAuthEnabled =
+  (import.meta.env.VITE_ENABLE_GOOGLE_AUTH as string | undefined) !== 'false';
+
+export function isDemoEmail(email: string | undefined | null): boolean {
+  return (email || '').toLowerCase() === DEMO_EMAIL;
+}
+
 export function getEmailDomain(email: string): string {
   return email.split('@')[1]?.toLowerCase() || '';
 }
 
 export function isValidDomain(email: string): boolean {
+  if (isDemoEmail(email)) return true;
   const domain = getEmailDomain(email);
   if (!domain) return false;
   return domain === allowedGoogleDomain;
 }
+
+/** Postgres raises 42501 when a row level security policy refuses a write. */
+export function isPolicyViolation(error: { code?: string; message?: string } | null): boolean {
+  if (!error) return false;
+  return error.code === '42501' || /row-level security|read only/i.test(error.message || '');
+}
+
+export const DEMO_WRITE_BLOCKED =
+  'The demo account is read only. This write was refused by a row level security policy in the database, not hidden in the UI.';
 
 export function getRoleFromEmail(email: string): UserRole {
   if (email.startsWith('admin@')) return 'admin';

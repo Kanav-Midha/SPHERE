@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { supabase, type Room } from '../../lib/supabase';
+import { supabase, isPolicyViolation, DEMO_WRITE_BLOCKED, type Room } from '../../lib/supabase';
 import {
   formatBookingDate,
   getFirstAvailableSlot,
@@ -131,6 +131,8 @@ export default function RoomBookingPanel({
     if (insertError) {
       if (insertError.code === '23505') {
         setError('This slot is no longer available. Please choose another time.');
+      } else if (isPolicyViolation(insertError)) {
+        setError(DEMO_WRITE_BLOCKED);
       } else {
         setError(insertError.message);
       }

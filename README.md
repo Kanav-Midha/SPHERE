@@ -28,6 +28,20 @@ operator access keys for their events.
 **Operators** enter a short access key on the scanner page and validate ticket
 QR codes at the door, with live scan metrics.
 
+## Try it
+
+**Live: [sphere-rust-iota.vercel.app](https://sphere-rust-iota.vercel.app)**
+
+A read-only demo account is wired in: the sign-in page has an **Explore the
+read-only demo** button that needs no account of your own.
+
+The demo can browse events and rooms, see live room availability, and claim a
+ticket to watch the QR flow. It cannot change anything else — and that limit is
+a database rule, not a hidden button. Try requesting a room as the demo user
+and Postgres refuses the write. See [Read-only demo](#read-only-demo) below.
+
+Deploying your own copy is covered in [DEPLOYMENT.md](DEPLOYMENT.md).
+
 ---
 
 ## Database design
@@ -70,6 +84,35 @@ caller's role without re-triggering RLS. Every later policy calls that instead
 of subquerying the table. See
 `supabase/migrations/20260419163245_fix_profiles_rls_recursion.sql`.
 
+### Read-only demo
+
+Making the demo safe was a good excuse to use a part of Postgres the rest of
+the project does not need. Every other policy here is PERMISSIVE, and
+permissive policies OR together — so adding one more could only ever widen
+access, never narrow it.
+
+RESTRICTIVE policies AND with the rest instead, so a write has to satisfy both
+the original policy and the demo check:
+
+```sql
+CREATE POLICY "Demo account cannot insert"
+  ON public.bookings
+  AS RESTRICTIVE FOR INSERT
+  TO authenticated
+  WITH CHECK (NOT public.is_demo_user());
+```
+
+Two details that cost me a while. The policies have to be written per command:
+`FOR ALL` would apply the `USING` clause to `SELECT` too and leave the demo
+account unable to read anything. And `SECURITY DEFINER` functions run as the
+owner and bypass RLS entirely, so `create_event_with_operator_key` and
+`reset_event_operator_key` needed the check written into the function body
+rather than relying on a policy.
+
+Claiming a ticket is deliberately still allowed — it is the best thing to show
+a visitor, and `UNIQUE (event_id, user_id)` already caps the demo account at
+one ticket per event however many people try it.
+
 ### Stored functions (RPCs)
 
 Where a policy cannot express the rule, the logic sits in a function rather
@@ -83,6 +126,7 @@ than in the client:
 - `claim_event_ticket(event_id)` — issues a ticket and increments capacity in one transaction
 - `process_event_scan(key, hash)` — validates a scanned ticket and records the scan
 - `get_operator_scan_metrics(key)` — aggregate scan counts for the operator dashboard
+- `is_demo_user()` — RLS-safe check used by the demo guardrails
 - `generate_compact_access_key()` — 12-character key from an unambiguous alphabet
   (no `0/O`, no `1/I`), formatted `XXXX-XXXX-XXXX` so it can be read aloud
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, Clock, Send, Plus, X } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { supabase, isPolicyViolation, DEMO_WRITE_BLOCKED } from '../../lib/supabase';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useTimeStore } from '../../store/useTimeStore';
 import { useToastStore } from '../../store/useToastStore';
@@ -79,6 +79,8 @@ export default function VolunteerForm({ volunteerEvent, onSuccess }: VolunteerFo
       if (error) {
         if (error.code === '23505') {
           addToast({ type: 'warning', title: 'Already Applied', message: 'You have already submitted an application.' });
+        } else if (isPolicyViolation(error)) {
+          addToast({ type: 'warning', title: 'Read-only demo', message: DEMO_WRITE_BLOCKED });
         } else {
           addToast({ type: 'error', title: 'Error', message: error.message });
         }

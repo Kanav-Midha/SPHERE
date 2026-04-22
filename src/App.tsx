@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { allowedGoogleDomain, isValidDomain, supabase } from './lib/supabase';
+import { allowedGoogleDomain, isDemoEmail, isValidDomain, supabase } from './lib/supabase';
 import { useAuthStore } from './store/useAuthStore';
 import { useOperatorSessionStore } from './store/useOperatorSessionStore';
 import { useToastStore } from './store/useToastStore';
@@ -7,6 +7,7 @@ import { useTimeStore } from './store/useTimeStore';
 import AmbientBackground from './components/3d/AmbientBackground';
 import NavBar from './components/ui/NavBar';
 import ToastContainer from './components/ui/Toast';
+import DemoBanner from './components/ui/DemoBanner';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Scanner from './pages/Scanner';
@@ -159,6 +160,8 @@ export default function App() {
   return (
     <div className="relative min-h-screen" style={{ background: '#050505' }}>
       <AmbientBackground />
+
+      {profile && isDemoEmail(profile.email) && currentPage !== 'scanner' && <DemoBanner />}
 
       {profile && currentPage !== 'scanner' && (
         <NavBar currentPage={currentPage} onNavigate={navigateTo} />

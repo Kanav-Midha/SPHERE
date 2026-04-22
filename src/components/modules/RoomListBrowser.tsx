@@ -12,7 +12,6 @@ interface RoomListBrowserProps {
 export default function RoomListBrowser({
   rooms,
   loading,
-  templateOnly,
   onSelectRoom,
 }: RoomListBrowserProps) {
   const [locationFilter, setLocationFilter] = useState('all');
